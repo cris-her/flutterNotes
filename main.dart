@@ -223,7 +223,7 @@ class HolaMundo extends StatelessWidget {
                       ),
                     ],
                   ),
-                  subtitle: Text("Por cierto, para revisar su horario de..."),
+                  subtitle: Text("+52 1 55 3466 7688: Por cierto, para..."),
                 ),
               ],
             ),
