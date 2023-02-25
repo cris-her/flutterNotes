@@ -61,11 +61,11 @@ class HolaMundo extends StatelessWidget {
                   leading: CircleAvatar(
                       radius: 22,
                       backgroundImage: NetworkImage(
-                          "https://raw.githubusercontent.com/cris-her/ZipTest/master/ProfFelipe.PNG")),
+                          "https://raw.githubusercontent.com/cris-her/ZipTest/master/Lavanderia.PNG")),
                   title: Stack(
                     children: [
                       Text(
-                        "Prof Felipe",
+                        "Lavandería",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -73,13 +73,13 @@ class HolaMundo extends StatelessWidget {
                         top: 0,
                         right: 0,
                         child: Text(
-                          "7:56 p. m.",
+                          "5:56 p. m.",
                           style: TextStyle(fontSize: 12),
                         ),
                       ),
                     ],
                   ),
-                  subtitle: Text("Cristofer Joshua Hernández Sánchez"),
+                  subtitle: Text("Ya me encuentro afuera"),
                 ),
                 ListTile(
                   leading: CircleAvatar(
@@ -151,7 +151,7 @@ class HolaMundo extends StatelessWidget {
                       ),
                     ],
                   ),
-                  subtitle: Text("Hola, buenas noches, te compartimos..."),
+                  subtitle: Text("Estimada comunidad, te compartimos..."),
                 ),
                 ListTile(
                   leading: CircleAvatar(
@@ -200,6 +200,30 @@ class HolaMundo extends StatelessWidget {
                     ],
                   ),
                   subtitle: Text("Acabo de comprar un planeta xD"),
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                      radius: 22,
+                      backgroundImage: NetworkImage(
+                          "https://raw.githubusercontent.com/cris-her/ZipTest/master/Noticias.PNG")),
+                  title: Stack(
+                    children: [
+                      Text(
+                        "G20 NOTICIAS",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Text(
+                          "1:28 p. m.",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                  subtitle: Text("Por cierto, para revisar su horario de..."),
                 ),
               ],
             ),
