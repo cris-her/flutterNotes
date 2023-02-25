@@ -74,7 +74,9 @@ class HolaMundo extends StatelessWidget {
                         right: 0,
                         child: Text(
                           "5:56 p. m.",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 115, 115, 115)),
                         ),
                       ),
                     ],
@@ -98,7 +100,9 @@ class HolaMundo extends StatelessWidget {
                         right: 0,
                         child: Text(
                           "7:53 p. m.",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 115, 115, 115)),
                         ),
                       ),
                     ],
@@ -122,7 +126,9 @@ class HolaMundo extends StatelessWidget {
                         right: 0,
                         child: Text(
                           "10:22 a. m.",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 115, 115, 115)),
                         ),
                       ),
                     ],
@@ -146,7 +152,9 @@ class HolaMundo extends StatelessWidget {
                         right: 0,
                         child: Text(
                           "22/02/23",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 115, 115, 115)),
                         ),
                       ),
                     ],
@@ -170,7 +178,9 @@ class HolaMundo extends StatelessWidget {
                         right: 0,
                         child: Text(
                           "10:50 a. m.",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 115, 115, 115)),
                         ),
                       ),
                     ],
@@ -194,7 +204,9 @@ class HolaMundo extends StatelessWidget {
                         right: 0,
                         child: Text(
                           "2:26 p. m.",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 115, 115, 115)),
                         ),
                       ),
                     ],
@@ -218,7 +230,9 @@ class HolaMundo extends StatelessWidget {
                         right: 0,
                         child: Text(
                           "1:28 p. m.",
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 115, 115, 115)),
                         ),
                       ),
                     ],
