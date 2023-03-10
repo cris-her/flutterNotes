@@ -123,19 +123,19 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
-  sendsms:
-    dependency: "direct main"
-    description:
-      name: sendsms
-      sha256: "07fe70ae2c593434ca1e0dc0c66b6d1a9252f9a30a4fe3f1698d9c29481b77fd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.99"
+  sms:
+    dependency: "direct main"
+    description:
+      name: sms
+      sha256: "2cb0c0591f970d2705e276b64cef716f64403b4126a1bc9d5f18fd5ba91bd6d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   source_span:
     dependency: transitive
     description:

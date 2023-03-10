@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sendsms/sendsms.dart';
+//import 'package:sendsms/sendsms.dart';
+import 'package:sms/sms.dart';
 
 main() {
   runApp(MaterialApp(
@@ -74,22 +75,62 @@ class _PMState extends State<PM> {
   */
 
   //run edit configuration ...additional run args: --no-sound-null-safety
+  final _phoneController = TextEditingController();
+  final _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(title: Text("Envio de mensajes SMS")),
-      body: ElevatedButton(
-          child: Text("Enviar SMS"),
-          onPressed: () {
-            enviarMensaje("5580130616", "Cristofer");
-          }
-      )
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextField(
+            controller: _phoneController,
+            keyboardType: TextInputType.phone,
+            decoration: InputDecoration(
+              labelText: 'Phone number',
+            ),
+          ),
+          SizedBox(height: 16),
+          TextField(
+            controller: _messageController,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              labelText: 'Message',
+            ),
+          ),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: (){
+              enviarMensaje(_phoneController.text, _messageController.text );
+            },
+            child: Text('Send SMS'),
+          ),
+        ],
+      ),
+
   );
 }
 // que corra algun paquete con android 8
 Future enviarMensaje(String telefono, String mensaje) async {
-  await Sendsms.onGetPermission();
 
-  if (await Sendsms.hasPermission()) {
-    await Sendsms.onSendSMS(telefono, mensaje);
-  }
+  SmsSender sender = new SmsSender();
+
+
+
+  sender.sendSms(new SmsMessage(telefono, mensaje));
+  /**/
+
+  // await Sendsms.onGetPermission();
+  //
+  // if (await Sendsms.hasPermission()) {
+  //   await Sendsms.onSendSMS(telefono, mensaje);
+  // }
 }
