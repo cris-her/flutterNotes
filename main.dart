@@ -1,11 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:all_sensors2/all_sensors2.dart'; // https://pub.dev/packages/all_sensors2
 
-void main() {
-  runApp( MyApp());
-}
-
+void main() => runApp(MyApp());
 
 
 class MyApp extends StatefulWidget {
@@ -14,315 +10,172 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  //const MyApp({super.key});
-  TextEditingController txtNum1 = TextEditingController();
-  TextEditingController txtNum2 = TextEditingController();
-
-  int total = 0;
-  bool dividir = false;
-  bool sumar = false;
-
-  String grupoSexo="";
-  String sexo = "";
-
-  double calificacion = 0;
+  List<double> acelerometro = [0.0, 0.0, 0.0];
+  List<double> giroscopio = [0.0, 0.0, 0.0];
+  bool proximidad = false;
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-                TextField(
-                  controller: txtNum1,
-                  decoration: InputDecoration(
-                      label: Text("Numero 1"),
-                      hintText: "Ingresa un numero",
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
-                  ),
-                ),
-                TextField(
-                  controller: txtNum2,
-                  decoration: InputDecoration(
-                      label: Text("Numero 2"),
-                      hintText: "Ingresa otro numero",
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
-                  ),
-                ),
-                CheckboxListTile(title: Text("Dividir?"),value: dividir, onChanged: (value){
-                  setState(() {
-                    dividir = value!;
-                  });
-                }),
-                SwitchListTile(title: Text("Sumar?"),value: sumar, onChanged: (value){
-                  setState(() {
-                    sumar = value!;
-                  });
-                }),
-                RadioListTile(title: Text("hombre"),value: "hombre", groupValue: grupoSexo, onChanged: (value){
-                  setState(() {
-                    grupoSexo = value.toString()!;
-                  });
-                }),
-                RadioListTile(title: Text("mujer"),value: "mujer", groupValue: grupoSexo, onChanged: (value){
-                  setState(() {
-                    grupoSexo = value.toString()!;
-                  });
-                }),
-                Slider(activeColor: Colors.deepPurple,label: calificacion.toString(), min: 0, max: 10, divisions: 10,value: calificacion, onChanged: (value){
-                  setState(() {
-                    calificacion = value;
-                    print(calificacion);
-                  });
-                }),
-
-                SizedBox(height: 15),
-                ElevatedButton(onPressed: (){
-                  setState(() {
-                    total = int.parse(txtNum1.text) * int.parse(txtNum2.text);
-                  });
-                  print(total);
-                }, child: Text("Multiplicar")),
-                Text("El resultado es: ${total}", style: TextStyle(fontSize: 20),)
-              ],
-            )
-          )
-      ),
-    );
-  }
-}
-
-class CustomClipPath extends CustomClipper<Path> {
-  var radius = 5.0;
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    // path.lineTo(size.width / 2, size.height);
-    // path.lineTo(size.width, 0.0);
-    // return path;
-
-    var w = size.width;
-    var h = size.height;
-
-    var r = min(w, h) / 2;
-
-    var centerX = w / 2;
-    var centerY = h / 2;
-
-    path.moveTo(centerX + r * cos(0), centerY + r * sin(0));
-
-    for (int i = 1; i <= 6; i++) {
-      var x = centerX + r * cos(pi / 3 * i);
-      var y = centerY + r * sin(pi / 3 * i);
-
-      path.lineTo(x, y);
-    }
-
-    path.close();
-    return path;
+  void initState() {
+    accelerometerEvents?.listen((event) {
+      setState(() {
+        acelerometro = [event.x, event.y, event.z];
+      });
+    });
+    accelerometerEvents?.listen((event) {
+      setState(() {
+        giroscopio = [event.x, event.y, event.z];
+      });
+    });
+    proximityEvents?.listen((event) {
+      setState(() {
+        proximidad = event.getValue();
+      });
+    });
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
-
-
+  Widget build(BuildContext context) => MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: Text("Test"),),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text("Acelerometro: ${acelerometro[0]} , ${acelerometro[1]}, ${acelerometro[2]} "),
+          ),
+          ListTile(
+            title: Text("Giroscopio: ${giroscopio[0]} , ${giroscopio[1]}, ${giroscopio[2]} "),
+          ),
+          ListTile(
+            title: Text("Proximidad: $proximidad "),
+          ),
+        ],
+      ),
+    ),
+  );
 }
-
 
 /*
-Stack(
-          children: [
-            Image.network(
-              "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-              height: 100,
-            ),
-            Positioned(left: 20, top: 30,child: Image.network(
-              "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-              height: 50,
-            ))
-          ],
-      )
+   String seleccion = "";
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: Text("Test $seleccion"),),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text("Alexis"),
+            onTap: (){
+              setState(() {
+                seleccion = "Alex";
+              });
+            },
+          ),
+          ListTile(
+            title: Text("Henry"),
+            onTap: (){
+              setState(() {
+                seleccion = "Hen";
+              });
+            },
+          ),
+          ListTile(
+            title: Text("Alejandra"),
+            onTap: (){
+              setState(() {
+                seleccion = "Ale";
+              });
+            },
+          ),
+          ListTile(
+            title: Text("Cristofer"),
+            onTap: (){
+              setState(() {
+                seleccion = "Cris";
+              });
+            },
+          ),
+          ListTile(
+            title: Text(seleccion),
+          ),
+        ],
+      ),
+    ),
+  );
 */
 
+/*
+   double ancho = 400;
+  String masDetalles = "Detalles";
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: Text("Test"),),
+      body: Column(
+        children: [
+          GestureDetector(
+            child: Image.network("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.mobafire.com%2Fimages%2Fchampion%2Fskins%2Flandscape%2Fannie-classic.jpg&f=1&nofb=1&ipt=f1e9acab51a5f90076da24df62fa00acfbca87921fb8a9bcc3f61f1974391127&ipo=images", width: ancho,),
+            onPanStart: (detalles){
+              setState(() {
+                masDetalles = detalles.localPosition.toString();
+              });
+            },
+            onPanUpdate: (detalles){
+              setState(() {
+                masDetalles = detalles.globalPosition.toString();
+              });
+            },
+            onPanEnd: (detalles){
+              setState(() {
+                masDetalles = detalles.velocity.toString();
+              });
+            },
+            //   onTap: (){
+            //     setState(() {
+            //       ancho = 200;
+            //     });
+            //   },
+            // onDoubleTap: (){
+            //     setState(() {
+            //       ancho = 400;
+            //     });
+            // },
+            // onTapDown: (detalles){
+            //   setState(() {
+            //     masDetalles = detalles.globalPosition.toString();
+            //   });
+            // },
+          ),
+          Text("Detalles $masDetalles")
+        ],
+      ),
+    ),
+  );
+*/
 
 /*
+   String evento = "";
 
-        String conValor = "value";
-        late String paraDespues;
-        String? conNulo;
-
-        paraDespues = "after";
-        conNulo ??= "No es vacio";
-
-        print(conValor.length);
-        print(paraDespues.length);
-        print(conNulo?.length);
-        print(conNulo!.length);
-
-        // Recortadores
-
-        body: ClipRRect(
-        child: Image.network(
-          "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-          height: 200,
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: Text("Test $evento"),),
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Presionar"),
+          onPressed: (){
+            setState(() {
+              evento="ON PRESSED";
+            });
+          },
+          onLongPress: (){
+            setState(() {
+              evento="ON LONG PRESS";
+            });
+          },
         ),
-        borderRadius: BorderRadius.circular(100.0),
-
-
-        body: ClipOval(
-        child: Image.network(
-        "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-        height: 200,
-
-
-        ClipPath 6 puntos
-
-        home: Scaffold(
-            body: ClipPath(
-                child: Image.network("https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg", height: 200,
-        ), clipper: CustomClipPath(), )),
-
-
-
-        body: Opacity(
-        child: Image.network(
-          "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-          height: 200,
-        ),
-        opacity: 0.7,
-
-
-        //rotar, escalar, transladar
-        home: Scaffold(
-          body: Transform.rotate(
-        child: Image.network(
-          "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-          height: 200,
-        ),
-        angle: -pi/4, // En radianes
-        )),
-        );
-
-
-        body: Transform.scale(
-        child: Image.network(
-          "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-          height: 200,
-        ),
-        scaleY: 1.5,
-
-
-        body: Transform.translate(
-        child: Image.network(
-          "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-          height: 200,
-        ),
-        offset: Offset(60, 80),
-
-
-        //salvar widget derecha regresa un widget que alinea a la derecha y guardar en una variable
-        // para mover en especifio pudiera se un translate, vs Alignment
-
-        // en eje Y es contrario arriba negativo, 1 es cien por ciento
-        //0,0 es centrado
-
-        //alt enter envolver o remover
-
-        body: Align(
-        alignment: Alignment(0, 0),
-        child: Image.network(
-          "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-          height: 200,
-        ),
-        )),
-
-
-        //widgets de layout
-        // eje principal en row es y, en columna es x
-        body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween, // alineacionMultiple
-          children: [
-            Image.network(
-              "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-              height: 180,
-            ),
-            Image.network(
-              "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-              height: 180,
-            ),
-            Image.network(
-              "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-              height: 180,
-            ),
-            Image.network(
-              "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-              height: 180,
-            ),
-          ],
-        ),
-      )),
-
-
-        body: Wrap(
-        direction: Axis.horizontal,
-        alignment: WrapAlignment.spaceEvenly,
-        children: [
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-        ],
-      )),
-
-      //table data, asc des, table
-      // wrap + single scroll view, maxCrossAxisExtent el tamaño
-
-      body: GridView.extent(
-        scrollDirection: Axis.horizontal,
-        maxCrossAxisExtent: 300.0,
-        padding: EdgeInsets.all(10.0),
-        mainAxisSpacing: 25,
-        crossAxisSpacing: 50,
-        children: [
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-          Image.network(
-            "https://www.shutterstock.com/image-photo/portrait-funny-cat-sunglasses-260nw-195698564.jpg",
-            height: 180,
-          ),
-        ],
-      )),
-
+      ),
+    ),
+  );
 */
