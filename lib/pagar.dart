@@ -14,7 +14,8 @@ class _PagarState extends State<Pagar> {
   Widget build(BuildContext context) {
     final List<Product> args =
         ModalRoute.of(context)!.settings.arguments as List<Product>;
-    final double total;
+    double total = args.fold(
+        0, (previousValue, product) => previousValue + product.price);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -27,7 +28,20 @@ class _PagarState extends State<Pagar> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 32.0, bottom: 0),
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back)),
+                    Expanded(child: Container()),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0, bottom: 0),
                 child: Text(
                   "Productos seleccionados:",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
@@ -46,7 +60,7 @@ class _PagarState extends State<Pagar> {
                 ),
               ),
               Divider(),
-              Padding(padding: EdgeInsets.all(16.0),child: Text("Total: "),)
+              Padding(padding: EdgeInsets.all(16.0),child: Text("Total: \$${total.toStringAsFixed(2)}"),)
             ],
           ),
         ),
