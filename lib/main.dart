@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:mar17/home.dart';
-import 'package:mar17/pagar.dart';
-
+import 'home.dart';
 import 'menu.dart';
+import 'pagar.dart';
 
 void main() {
   runApp( HolaMundo());
